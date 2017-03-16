@@ -30,9 +30,9 @@ dependencies {
     compile(
         'org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE',
         'org.springframework.boot:spring-boot-devtools:1.5.2.RELEASE', // hot swapping
+        'org.springframework.boot:spring-boot-starter-thymeleaf:1.5.2.RELEASE',
 
         project(':dashboard_api'),
-        project(':dashboard_ui'),
     )
 
     testCompile(
