@@ -29,7 +29,7 @@ export default class LineGraph extends React.Component {
     return <svg preserveAspectRatio="none" viewBox="0 0 100 100">
       <polyline className="xAxis" points={`0,${100 - xAxisMargin} 100,${100 - xAxisMargin}`}/>
       <polyline className="yAxis" points={`${yAxisMargin},100 ${yAxisMargin},0`}/>
-      <polyline className="line" points={scaledPoints(points)}/>
+      <polyline className="line" points={scaledPoints(points, 100, xAxisMargin, 100, yAxisMargin)}/>
       {LineGraph.xAxisTicks(points)}
       {LineGraph.yAxisTicks(points)}
       <text className="title" x={yAxisMargin + 5} y="10">{title}</text>

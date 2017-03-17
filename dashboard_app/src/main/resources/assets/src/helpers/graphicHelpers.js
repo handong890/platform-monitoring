@@ -1,21 +1,25 @@
-//export const scaledPoints = (points, maxX, xAxisMargin, maxY, yAxisMargin) => {
-//  const yMax = 100 - xAxisMargin
-//  const maxYPoint = Math.max(...points)
-//  const yRatio = yMax / maxYPoint
-//
-//  const xMax = 100 - yAxisMargin
-//  const maxXPoint = points.length
-//  const xRatio = xMax / maxXPoint
-//
-//  const scaledPoints = points.map((p, i) => {
-//    const x = i * xRatio + yAxisMargin
-//    const y = p * yRatio
-//    return `${x ? x : 0},${y ? (100 - y + xAxisMargin) : 0}` // TODO: Handle NaN (x/y = 0) more gracefully
-//  })
-//
-//  return scaledPoints.join(' ')
-//}
+// maxX and maxY refer to the viewbox of the containing element
+// xAxisMargin and yAxisMargin refer to the amount of space allocated between the viewbox edge and where we're drawing
+// the axes
 
+// TODO: rename maxY/maxX
 export const scaledPoints = (points, maxX, xAxisMargin, maxY, yAxisMargin) => {
-  return ''
+  if (points.length < 2) {
+    throw 'Please provide at least 2 points.'
+  }
+
+  const minPoint = Math.min(...points)
+  const maxPoint = Math.max(...points)
+
+  const xDifference = points.length - 1
+  const yDifference = maxPoint - minPoint ? maxPoint - minPoint : 1
+
+  const scaleOfX = (maxX - yAxisMargin) / xDifference ? (maxX - yAxisMargin) / xDifference : 1
+  const scaleOfY = (maxY - xAxisMargin) / yDifference ? (maxY - xAxisMargin) / yDifference : 1
+
+  return points
+    .map((p, i) => {
+      return `${yAxisMargin + i * scaleOfX},${maxY - xAxisMargin - ((p - minPoint) * scaleOfY)}`
+    })
+    .join(' ')
 }
